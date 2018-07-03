@@ -8,20 +8,26 @@ const dbPromise = idb.open('mascota', 2, upgradeDB => {
     switch (upgradeDB.oldVersion) {
       case 0:
       upgradeDB.createObjectStore('mascota', {keyPath: 'id'});
+      case 1:
+      upgradeDB.createObjectStore('mascotaDos', {autoIncrement
+        : 'id'});
+      
        
     }
   });
 
 
+  //insertar data
   dbPromise.then( (db)=>{
-    const table =  "mascota"
-    const tx = db.transaction(table, "readwrite");
-    tx.objectStore(table).put({
-        id: 2,
-        data:{
-         raza: "perro de perrera",
-         nombre:"Perro truko"
-        }
+  
+    const tx = db.transaction("mascota", "readwrite");
+    
+        tx.objectStore("mascota").put({
+            id: 88,
+            data:{
+            raza: "lagarto ",
+            nombre:"lagarto"
+         }
     })
     return tx;
   })
@@ -32,12 +38,14 @@ const dbPromise = idb.open('mascota', 2, upgradeDB => {
  */
 
  dbPromise.then((db)=>{
-    const table = "mascota";
-    const tx = db.transaction(table)
-              .objectStore(table).getAll();
-    return tx;
+     
+    const tx = db.transaction("mascota")
+    const data =  tx.objectStore("mascota").getAll();
+
+              
+    return data;
  }).then((data)=>{
-      console.log(data)
+     // console.log("data all", data)
  })
 
 /* 
@@ -45,9 +53,24 @@ const dbPromise = idb.open('mascota', 2, upgradeDB => {
  */
 dbPromise.then((db)=>{
     const tx = db.transaction("mascota")
-                .objectStore("mascota").get(2)
-    return tx;
+    const data =  tx.objectStore("mascota").get(2)
+
+    return data;
 }).then((data)=>{
-    console.log("filtrado x id", data)
+    //console.log("filtrado x id", data)
 
 }) 
+
+
+//cursor
+dbPromise.then((db)=>{
+  const tx = db.transaction("mascota")
+  tx.objectStore("mascota").openCursor().then(function cursorIterate(cursor){
+      if(!cursor) return false;
+
+      console.log(cursor.value)
+      return cursor.continue().then(cursorIterate)
+  })
+
+  tx.complete().then( ()=> console.log("done"))
+})
