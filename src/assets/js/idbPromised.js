@@ -2,15 +2,19 @@ import idb from 'idb';
 
 
 
-const dbPromise = idb.open('mascota', 2, upgradeDB => {
+const dbPromise = idb.open('mascotasDb', 2, upgradeDB => {
     // Note: we don't use 'break' in this switch statement,
     // the fall-through behaviour is what we want.
     switch (upgradeDB.oldVersion) {
       case 0:
-      upgradeDB.createObjectStore('mascota', {keyPath: 'id'});
-      case 1:
-      upgradeDB.createObjectStore('mascotaDos', {autoIncrement
-        : 'id'});
+
+      const  storeUser =  upgradeDB.createObjectStore('user', {keyPath: 'userId'});
+      storeUser.createIndex('tipo', 'tipo');
+
+      
+      const  storeMascota =  upgradeDB.createObjectStore('mascotas', {keyPath: 'id'});
+      storeMascota.createIndex('raza', 'raza');
+
       
        
     }
@@ -18,22 +22,23 @@ const dbPromise = idb.open('mascota', 2, upgradeDB => {
 
 
   //insertar data
- /* dbPromise.then( (db)=>{
+  /*dbPromise.then( (db)=>{
   
-    const tx = db.transaction("mascota", "readwrite");
-    var x = 100;
-    while(++x<200){
-        tx.objectStore("mascota").put({
+    const tx = db.transaction("mascotas", "readwrite");
+    var x = 0;
+    
+    while(x++<=100){
+        tx.objectStore("mascotas").add({
             id: x,
-            data:{
-            raza: "lagarto ",
-            nombre:"lagarto"
-         }
-       })
-    }     
+            tipo: "normal",
+            nombre:"pepe"
+            
+        })
+    }
+        
     return tx;
-  })
-*/
+  }) */
+ 
   
 /* 
  * Obtener data
@@ -41,8 +46,8 @@ const dbPromise = idb.open('mascota', 2, upgradeDB => {
 
  dbPromise.then((db)=>{
      
-    const tx = db.transaction("mascota")
-    const data =  tx.objectStore("mascota").getAll();
+    const tx = db.transaction("mascotas")
+    const data =  tx.objectStore("mascotas").getAll();
 
               
     return data;
@@ -54,8 +59,8 @@ const dbPromise = idb.open('mascota', 2, upgradeDB => {
  * Obtener registo por Id 
  */
 dbPromise.then((db)=>{
-    const tx = db.transaction("mascota")
-    const data =  tx.objectStore("mascota").get(2)
+    const tx = db.transaction("mascotas")
+    const data =  tx.objectStore("mascotas").get(2)
 
     return data;
 }).then((data)=>{
@@ -66,8 +71,8 @@ dbPromise.then((db)=>{
 
 //cursor
 /*dbPromise.then((db)=>{
-  const tx = db.transaction("mascota")
-  tx.objectStore("mascota").openCursor().then(function cursorIterate(cursor){
+  const tx = db.transaction("mascotas")
+  tx.objectStore("mascotas").openCursor().then(function cursorIterate(cursor){
       if(!cursor) return false;
 
       console.log(cursor.value)
@@ -79,9 +84,10 @@ dbPromise.then((db)=>{
 
 
 //cursor PREV
+/*
 dbPromise.then((db)=>{
-    const tx = db.transaction("mascota")
-    tx.objectStore("mascota").openCursor(null, "prev")
+    const tx = db.transaction("mascotas")
+    tx.objectStore("mascotas").openCursor(null, "prev")
     .then(function(cursor){
 
         return cursor.advance(100);
@@ -96,4 +102,4 @@ dbPromise.then((db)=>{
     })
   
    
-  })
+  }) */

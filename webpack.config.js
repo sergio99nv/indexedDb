@@ -14,9 +14,14 @@ const config = {
   context: path.resolve(__dirname, 'src'),
 
   entry: {
+    'sw': './sw.js',
+    'sw-register': './sw-register.js',
+    
+    './assets/js/idbPromised': './assets/js/idbPromised.js',
+
+    './assets/js/saludo': './assets/js/saludo.js',
+    './assets/js/app': './assets/js/app.js'
   
-    'app': './app.js',
-    'idbPromised': './assets/js/idbPromised.js',
      
   },
 
