@@ -1,0 +1,70 @@
+ 
+foodTypes :[
+    {
+        foodTypeId: 1,
+        name:breakFast ,
+        startHour:8:00,
+        endHour:  11:59   
+    },
+    {
+        foodTypeId:2,
+        name:lunch,
+        startHour: 12:00,
+        endHour:  16:99
+
+    },
+    {
+        foodTypeId:3,
+        name:dinner,
+        startHour: 5:00,
+        endHour: 22:00 
+    }
+
+]
+
+
+
+
+foods:[
+   
+        {
+            foodId:1,
+            foodTypeId: 1,
+            price:23,
+            name:"baleadeas",
+            dias: [4, 5, 6]
+         
+        },
+        {
+            foodId:2,
+            foodTypeId: 2,
+            price:25,
+            name:"huevos revultos",
+             dias: [1, 2, 3]
+            
+        },
+        {
+            foodId:3,
+            foodTypeId: 3,
+            price:100.50,
+            name:"desayuno bomba",
+            dias: [4, 7]
+            
+        }
+    } 
+
+
+]
+
+
+avaibleDays:[
+    
+       
+        monday:{
+            foodIds:[1, 2, 3]
+            
+ 
+         },
+
+ }       
+             

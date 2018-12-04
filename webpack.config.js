@@ -14,6 +14,7 @@ const config = {
   context: path.resolve(__dirname, 'src'),
 
   entry: {
+    
     'sw': './sw.js',
     'sw-register': './sw-register.js',
     
@@ -110,7 +111,9 @@ const config = {
     open: true
   },
 
-  devtool: 'inline-source-map'
+  // devtool: 'inline-source-map'
+  devtool: false 
+
 
 }
 
